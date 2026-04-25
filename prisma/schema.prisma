@@ -1,0 +1,210 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model box_mbg {
+  id                BigInt          @id @default(autoincrement())
+  qr_code           String          @unique(map: "qr_code") @db.VarChar(100)
+  tugas_detail_id   BigInt
+  status            box_mbg_status? @default(di_sppg)
+  jumlah_porsi      Int?            @default(0)
+  scanned_sppg_at   DateTime?       @db.DateTime(0)
+  scanned_sampai_at DateTime?       @db.DateTime(0)
+  created_at        DateTime        @default(now()) @db.Timestamp(0)
+  tugas_detail      tugas_detail    @relation(fields: [tugas_detail_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_box_mbg_tugas_detail")
+  scan_logs         scan_logs[]
+
+  @@index([tugas_detail_id], map: "idx_box_mbg_tugas_detail")
+}
+
+model feedback {
+  id         BigInt   @id @default(autoincrement())
+  user_id    BigInt?
+  pesan      String   @db.Text
+  rating     Int?
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  users      users?   @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "fk_feedback_user")
+
+  @@index([user_id], map: "fk_feedback_user")
+}
+
+model notifikasi {
+  id         BigInt           @id @default(autoincrement())
+  user_id    BigInt
+  jenis      notifikasi_jenis
+  judul      String?          @db.VarChar(100)
+  pesan      String?          @db.Text
+  is_read    Boolean?         @default(false)
+  created_at DateTime         @default(now()) @db.Timestamp(0)
+  users      users            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_notifikasi_user")
+
+  @@index([user_id], map: "fk_notifikasi_user")
+}
+
+model scan_logs {
+  id          BigInt              @id @default(autoincrement())
+  box_id      BigInt
+  user_id     BigInt?
+  scan_type   scan_logs_scan_type
+  latitude    Float?
+  longitude   Float?
+  scanned_at  DateTime?           @default(now()) @db.DateTime(0)
+  device_info String?             @db.Text
+  box_mbg     box_mbg             @relation(fields: [box_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_scan_logs_box")
+  users       users?              @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "fk_scan_logs_user")
+
+  @@index([user_id], map: "fk_scan_logs_user")
+  @@index([box_id], map: "idx_scan_logs_box")
+}
+
+model sekolah {
+  id           BigInt                @id @default(autoincrement())
+  nama_sekolah String                @db.VarChar(100)
+  alamat       String                @db.Text
+  latitude     Float?
+  longitude    Float?
+  jenis_tujuan sekolah_jenis_tujuan? @default(sekolah)
+  created_at   DateTime              @default(now()) @db.Timestamp(0)
+  tugas_detail tugas_detail[]
+}
+
+model sessions {
+  id         BigInt   @id @default(autoincrement())
+  user_id    BigInt
+  token      String   @unique(map: "uq_sessions_token", length: 255) @db.Text
+  expired_at DateTime @db.DateTime(0)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_sessions_user")
+
+  @@index([user_id], map: "fk_sessions_user")
+}
+
+model sppg {
+  id           BigInt         @id @default(autoincrement())
+  nama_sppg    String         @db.VarChar(100)
+  alamat       String         @db.Text
+  latitude     Float?
+  longitude    Float?
+  created_at   DateTime       @default(now()) @db.Timestamp(0)
+  tugas_driver tugas_driver[]
+}
+
+model tracking_logs {
+  id            BigInt                       @id @default(autoincrement())
+  tugas_id      BigInt
+  driver_id     BigInt
+  latitude      Float?
+  longitude     Float?
+  speed         Float?
+  motion_status tracking_logs_motion_status? @default(diam)
+  recorded_at   DateTime?                    @default(now()) @db.DateTime(0)
+  users         users                        @relation(fields: [driver_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tracking_logs_driver")
+  tugas_driver  tugas_driver                 @relation(fields: [tugas_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tracking_logs_tugas")
+
+  @@index([tugas_id], map: "fk_tracking_logs_tugas")
+  @@index([driver_id], map: "idx_tracking_driver")
+}
+
+model tugas_detail {
+  id           BigInt               @id @default(autoincrement())
+  tugas_id     BigInt
+  sekolah_id   BigInt
+  urutan_kirim Int
+  status       tugas_detail_status? @default(pending)
+  jam_sampai   DateTime?            @db.DateTime(0)
+  created_at   DateTime             @default(now()) @db.Timestamp(0)
+  box_mbg      box_mbg[]
+  sekolah      sekolah              @relation(fields: [sekolah_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_sekolah")
+  tugas_driver tugas_driver         @relation(fields: [tugas_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_tugas")
+
+  @@index([sekolah_id], map: "fk_tugas_detail_sekolah")
+  @@index([tugas_id], map: "idx_tugas_detail_tugas")
+}
+
+model tugas_driver {
+  id            BigInt               @id @default(autoincrement())
+  driver_id     BigInt
+  sppg_id       BigInt?
+  tanggal_tugas DateTime             @db.Date
+  status        tugas_driver_status? @default(pending)
+  jam_mulai     DateTime?            @db.DateTime(0)
+  jam_selesai   DateTime?            @db.DateTime(0)
+  created_at    DateTime             @default(now()) @db.Timestamp(0)
+  tracking_logs tracking_logs[]
+  tugas_detail  tugas_detail[]
+  sppg          sppg?                @relation(fields: [sppg_id], references: [id], onUpdate: Restrict, map: "fk_tugas_driver_sppg")
+  users         users                @relation(fields: [driver_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_driver_user")
+
+  @@index([sppg_id], map: "fk_tugas_driver_sppg")
+  @@index([driver_id], map: "idx_tugas_driver_driver")
+}
+
+model users {
+  id                BigInt          @id @default(autoincrement())
+  nama              String          @db.VarChar(100)
+  nik               String?         @unique(map: "nik") @db.VarChar(50)
+  no_telp           String?         @db.VarChar(20)
+  password_hash     String          @db.Text
+  role              users_role
+  foto_profil       String?         @db.Text
+  biometric_enabled Boolean?        @default(false)
+  created_at        DateTime        @default(now()) @db.Timestamp(0)
+  updated_at        DateTime        @default(now()) @db.Timestamp(0)
+  feedback          feedback[]
+  notifikasi        notifikasi[]
+  scan_logs         scan_logs[]
+  sessions          sessions[]
+  tracking_logs     tracking_logs[]
+  tugas_driver      tugas_driver[]
+
+  @@index([role], map: "idx_users_role")
+}
+
+enum notifikasi_jenis {
+  pengumuman
+  tugas
+  sanksi
+}
+
+enum box_mbg_status {
+  di_sppg
+  diperjalanan
+  sampai
+}
+
+enum scan_logs_scan_type {
+  pickup
+  delivered
+}
+
+enum tugas_detail_status {
+  pending
+  sampai
+}
+
+enum tugas_driver_status {
+  pending
+  berjalan
+  selesai
+}
+
+enum sekolah_jenis_tujuan {
+  sekolah
+  posyandu
+}
+
+enum users_role {
+  admin
+  driver
+  dapur
+}
+
+enum tracking_logs_motion_status {
+  diam
+  bergerak
+}
