@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:3000/api/auth
+@contentType = application/json
+
+### ========================================
+### REGISTER USER (DEV)
+### ========================================
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "nama": "Andi",
+  "nik": "3508123456789001",
+  "no_telp": "081234567890",
+  "password": "123456",
+  "role": "driver"
+}
+
+### ========================================
+### LOGIN
+### ========================================
+# @name login
+POST {{baseUrl}}/login
+Content-Type: {{contentType}}
+
+{
+  "nama": "Andi",
+  "password": "123456"
+}
+
+### ========================================
+### CHECK SESSION (ME)
+### ========================================
+GET {{baseUrl}}/me
+Content-Type: {{contentType}}
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### LOGOUT
+### ========================================
+POST {{baseUrl}}/logout
+Content-Type: {{contentType}}
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### CHECK SESSION AFTER LOGOUT
+### ========================================
+GET {{baseUrl}}/me
+Content-Type: {{contentType}}
+Cookie: {{login.response.headers.Set-Cookie}}

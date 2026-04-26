@@ -1,21 +1,29 @@
-const express = require("express");
-const cors = require("cors");
-const session = require("express-session");
-require("dotenv").config();
+import express from "express";
+import cors from "cors";
+import session from "express-session";
+import dotenv from "dotenv";
+dotenv.config();
 
-const authRoutes = require("./routes/authRoutes");
+import router from "./routes/authRoutes";
+//const authRoutes = require("./routes/authRoutes.js");
 
 const app = express();
 
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }));
 
+//ingat harus ip frontend
+app.use(cors({
+  origin: ['http://localhost', 'http://127.0.0.1:5500','http://10.0.2.2:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // Jika butuh kirim cookie/session
+}));
 app.use(express.json());
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET!,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -25,6 +33,6 @@ app.use(session({
   }
 }));
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", router);
 
 export default app;
