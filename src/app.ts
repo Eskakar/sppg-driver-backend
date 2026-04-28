@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv";
+import userRoutes from "./routes/userRoutes.js";
+import tugasRoutes from "./routes/tugasRoutes.js";
+
 dotenv.config();
 
 import router from "./routes/authRoutes";
@@ -34,5 +37,7 @@ app.use(session({
 }));
 
 app.use("/api/auth", router);
+app.use("/api/user", userRoutes);
+app.use("/api/tugas", tugasRoutes);
 
 export default app;

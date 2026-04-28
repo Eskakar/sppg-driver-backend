@@ -14,6 +14,13 @@ model box_mbg {
   jumlah_porsi      Int?            @default(0)
   scanned_sppg_at   DateTime?       @db.DateTime(0)
   scanned_sampai_at DateTime?       @db.DateTime(0)
+  scanned_sppg_lat   Float?
+  scanned_sppg_lng   Float?
+
+  scanned_sampai_lat Float?
+  scanned_sampai_lng Float?
+
+  delivered_sekolah_id BigInt?
   created_at        DateTime        @default(now()) @db.Timestamp(0)
   tugas_detail      tugas_detail    @relation(fields: [tugas_detail_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_box_mbg_tugas_detail")
   scan_logs         scan_logs[]
@@ -117,6 +124,7 @@ model tugas_detail {
   status       tugas_detail_status? @default(pending)
   jam_sampai   DateTime?            @db.DateTime(0)
   created_at   DateTime             @default(now()) @db.Timestamp(0)
+  target_mbg   Int?                 @default(0)
   box_mbg      box_mbg[]
   sekolah      sekolah              @relation(fields: [sekolah_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_sekolah")
   tugas_driver tugas_driver         @relation(fields: [tugas_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_tugas")
@@ -154,6 +162,7 @@ model users {
   biometric_enabled Boolean?        @default(false)
   created_at        DateTime        @default(now()) @db.Timestamp(0)
   updated_at        DateTime        @default(now()) @db.Timestamp(0)
+  gaji              Decimal?        @default(0.00) @db.Decimal(15, 2)
   feedback          feedback[]
   notifikasi        notifikasi[]
   scan_logs         scan_logs[]

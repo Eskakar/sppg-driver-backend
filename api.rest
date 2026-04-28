@@ -1,10 +1,12 @@
-@baseUrl = http://localhost:3000/api/auth
+@authUrl = http://localhost:3000/api/auth
+@userURL = http://localhost:3000/api/user
+@tugasURL =  http://localhost:3000/api/tugas
 @contentType = application/json
 
 ### ========================================
 ### REGISTER USER (DEV)
 ### ========================================
-POST {{baseUrl}}/register
+POST {{authUrl}}/register
 Content-Type: {{contentType}}
 
 {
@@ -19,31 +21,99 @@ Content-Type: {{contentType}}
 ### LOGIN
 ### ========================================
 # @name login
-POST {{baseUrl}}/login
+POST {{authUrl}}/login
 Content-Type: {{contentType}}
 
 {
-  "nama": "Andi",
+  "nama": "Driver Andi",
   "password": "123456"
 }
 
 ### ========================================
 ### CHECK SESSION (ME)
 ### ========================================
-GET {{baseUrl}}/me
+GET {{authUrl}}/me
 Content-Type: {{contentType}}
-Cookie: {{login.response.headers.Set-Cookie}}
+# Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### LOGOUT
 ### ========================================
-POST {{baseUrl}}/logout
+POST {{authUrl}}/logout
+Content-Type: {{contentType}}
+# Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### CHECK SESSION SETELAH LOGOUT
+### ========================================
+GET {{authUrl}}/me
+Content-Type: {{contentType}}
+# Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### GET USER DATA DASHBOARD 
+### ========================================
+GET {{userURL}}/me
+Content-Type: {{contentType}}
+# Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### SEARCH HISTORY USER DATA  
+### ========================================
+GET {{tugasURL}}/search?search=SMA 1 JAKARTA
+Content-Type: {{contentType}}
+###
+GET {{tugasURL}}/search?search=2026-04-26
+Content-Type: {{contentType}}
+###
+GET {{tugasURL}}/search?search=SMA 7 YTTA
+Content-Type: {{contentType}}
+###
+GET {{tugasURL}}/search?search=2027-04-26
+Content-Type: {{contentType}}
+
+### ========================================
+### DETAIL TUGAS YANG SUDAH SELESAI
+### ========================================
+GET {{tugasURL}}/2/detail
+Content-Type: {{contentType}}
+# Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### LIST TUGAS TUGAS YANG SUDAH SELESAI
+### ========================================
+GET {{tugasURL}}/history/preview
+Content-Type: {{contentType}}
+
+### ========================================
+### TUGAS TUGAS YANG SEDANG BERLANGSUNG
+### ========================================
+GET {{tugasURL}}/current
+Content-Type: {{contentType}}
+
+### ========================================
+### SCAN PICKUP, di SPPG sebelum perjalanan
+### ========================================
+POST {{tugasURL}}/pickup
 Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
 
+{
+  "qr_code": "RUN-1",
+  "latitude": -6.2000,
+  "longitude": 106.8000
+}
+
 ### ========================================
-### CHECK SESSION AFTER LOGOUT
+### SCAN DELIVERED (ke sekolah)
 ### ========================================
-GET {{baseUrl}}/me
+POST {{tugasURL}}/scan/delivered
 Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
+
+{
+  "qr_code": "RUN-8",
+  "sekolah_id": 3,
+  "latitude": -6.2100,
+  "longitude": 106.8100
+}
