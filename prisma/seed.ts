@@ -39,6 +39,7 @@ async function main() {
       password_hash: password,
       role: "driver",
       gaji: 3000000,
+      foto_profil: "Andi.jpg"
     },
   });
 
@@ -48,6 +49,7 @@ async function main() {
       no_telp: "0800000001",
       password_hash: password,
       role: "admin",
+      foto_profil: "Andi.jpg"
     },
   });
 

@@ -1,6 +1,6 @@
 @authUrl = http://localhost:3000/api/auth
 @userURL = http://localhost:3000/api/user
-@tugasURL =  http://localhost:3000/api/tugas
+@baseURL =  http://localhost:3000/api
 @contentType = application/json
 
 ### ========================================
@@ -60,41 +60,41 @@ Content-Type: {{contentType}}
 ### ========================================
 ### SEARCH HISTORY USER DATA  
 ### ========================================
-GET {{tugasURL}}/search?search=SMA 1 JAKARTA
+GET {{baseURL}}/tugas/search?search=SMA 1 JAKARTA
 Content-Type: {{contentType}}
 ###
-GET {{tugasURL}}/search?search=2026-04-26
+GET {{baseURL}}/tugas/search?search=2026-04-26
 Content-Type: {{contentType}}
 ###
-GET {{tugasURL}}/search?search=SMA 7 YTTA
+GET {{baseURL}}/tugas/search?search=SMA 7 YTTA
 Content-Type: {{contentType}}
 ###
-GET {{tugasURL}}/search?search=2027-04-26
+GET {{baseURL}}/tugas/search?search=2027-04-26
 Content-Type: {{contentType}}
 
 ### ========================================
 ### DETAIL TUGAS YANG SUDAH SELESAI
 ### ========================================
-GET {{tugasURL}}/2/detail
+GET {{baseURL}}/tugas/8/detail
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### LIST TUGAS TUGAS YANG SUDAH SELESAI
 ### ========================================
-GET {{tugasURL}}/history/preview
+GET {{baseURL}}/tugas/history/preview
 Content-Type: {{contentType}}
 
 ### ========================================
 ### TUGAS TUGAS YANG SEDANG BERLANGSUNG
 ### ========================================
-GET {{tugasURL}}/current
+GET {{baseURL}}/tugas/current
 Content-Type: {{contentType}}
 
 ### ========================================
 ### SCAN PICKUP, di SPPG sebelum perjalanan
 ### ========================================
-POST {{tugasURL}}/pickup
+POST {{baseURL}}/tugas/scan
 Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
 
@@ -105,15 +105,15 @@ Cookie: {{login.response.headers.Set-Cookie}}
 }
 
 ### ========================================
-### SCAN DELIVERED (ke sekolah)
+### SCAN DELIVERED, di Sekolah
 ### ========================================
-POST {{tugasURL}}/scan/delivered
+POST {{baseURL}}/tugas/scan
 Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
 
 {
-  "qr_code": "RUN-8",
-  "sekolah_id": 3,
+  "qr_code": "RUN-4",
   "latitude": -6.2100,
   "longitude": 106.8100
 }
+

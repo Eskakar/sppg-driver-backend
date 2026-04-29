@@ -11,6 +11,7 @@ import router from "./routes/authRoutes";
 //const authRoutes = require("./routes/authRoutes.js");
 
 const app = express();
+const ip_hp = process.env.IP_FRONTEND || "";
 
 // app.use(cors({
 //   origin: true,
@@ -19,7 +20,7 @@ const app = express();
 
 //ingat harus ip frontend
 app.use(cors({
-  origin: ['http://localhost', 'http://127.0.0.1:5500','http://10.0.2.2:3000'],
+  origin: ['http://localhost', 'http://127.0.0.1:5500','http://10.0.2.2:3000',ip_hp],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // Jika butuh kirim cookie/session
 }));
@@ -39,5 +40,5 @@ app.use(session({
 app.use("/api/auth", router);
 app.use("/api/user", userRoutes);
 app.use("/api/tugas", tugasRoutes);
-
+app.use("/api/uploads", express.static("uploads"));
 export default app;
