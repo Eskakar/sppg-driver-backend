@@ -8,6 +8,7 @@ import tugasRoutes from "./routes/tugasRoutes.js";
 dotenv.config();
 
 import router from "./routes/authRoutes";
+import notifRoutes from "./routes/notifRoutes.js";
 //const authRoutes = require("./routes/authRoutes.js");
 
 const app = express();
@@ -41,4 +42,5 @@ app.use("/api/auth", router);
 app.use("/api/user", userRoutes);
 app.use("/api/tugas", tugasRoutes);
 app.use("/api/uploads", express.static("uploads"));
+app.use("/api/notif", notifRoutes);
 export default app;

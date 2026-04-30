@@ -234,6 +234,16 @@ async function main() {
     });
   }
 
+  await prisma.notifikasi.create({
+    data: 
+      {
+        user_id: driver.id,
+        judul: "Tugas Baru",
+        pesan: "Anda mendapatkan tugas pengantaran hari ini",
+        jenis: "tugas"
+      },
+  });
+
   console.log("✅ SEEDING DONE!");
 }
 

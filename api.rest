@@ -116,4 +116,55 @@ Cookie: {{login.response.headers.Set-Cookie}}
   "latitude": -6.2100,
   "longitude": 106.8100
 }
+### ========================================
+### notif tugas baru ke semua driver
+### ========================================
+POST {{baseURL}}/notif/send-tugas
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
 
+{
+  "tugas_id": "7",
+  "judul": "Tugas Baru Hari Ini",
+  "pesan": "Silakan mulai pengantaran ke sekolah tujuan"
+}
+### ========================================
+### notif tugas baru ke semua driver
+### ========================================
+POST {{baseURL}}/notif/send-tugas
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+{
+  "tugas_id": "7",
+  "judul": "Tugas Baru Hari Ini",
+  "pesan": "Silakan mulai pengantaran ke sekolah tujuan"
+}
+### ================================================================
+### agar frontend bisa mengambil semua notif (send aatau pun unsend)
+### ===============================================================
+GET {{baseURL}}/notif/
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### READ notif tugas
+### ========================================
+POST {{baseURL}}/notif/read
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ===================================================================================
+### Check dari frd ada pesan baru yang belum terkirim tidak, lalu ngambil semua yng unsent
+### ======================================================================================
+GET {{baseURL}}/notif/unsent
+Cookie: {{login.response.headers.Set-Cookie}}
+
+###
+POST {{baseURL}}/notif/mark-sent
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+{
+  "ids": [5]
+}
