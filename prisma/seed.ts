@@ -234,14 +234,27 @@ async function main() {
     });
   }
 
-  await prisma.notifikasi.create({
-    data: 
+  await prisma.notifikasi.createMany({
+    data:[ 
       {
         user_id: driver.id,
         judul: "Tugas Baru",
         pesan: "Anda mendapatkan tugas pengantaran hari ini",
         jenis: "tugas"
       },
+      {
+        user_id: driver.id,
+        judul: "Pemberitahuan",
+        pesan: "Akan ada pemeriksaan kendaraan pada tiap Driver",
+        jenis: "pengumuman"
+      },
+      {
+        user_id: driver.id,
+        judul: "Peringatan",
+        pesan: "Dilarang melewati batas maksimal kecepatan kendaraan",
+        jenis: "sanksi"
+      },
+    ]
   });
 
   console.log("✅ SEEDING DONE!");

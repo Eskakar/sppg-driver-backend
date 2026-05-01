@@ -4,11 +4,13 @@ import session from "express-session";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import tugasRoutes from "./routes/tugasRoutes.js";
+import { sessionMiddleware } from "./config/session";
 
 dotenv.config();
 
 import router from "./routes/authRoutes";
 import notifRoutes from "./routes/notifRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 //const authRoutes = require("./routes/authRoutes.js");
 
 const app = express();
@@ -27,20 +29,23 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET!,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24
-  }
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET!,
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     secure: false,
+//     httpOnly: true,
+//     maxAge: 1000 * 60 * 60 * 24
+//   }
+// }));
+
+app.use(sessionMiddleware);
 
 app.use("/api/auth", router);
 app.use("/api/user", userRoutes);
 app.use("/api/tugas", tugasRoutes);
 app.use("/api/uploads", express.static("uploads"));
 app.use("/api/notif", notifRoutes);
+app.use("/api/ai", aiRoutes);
 export default app;

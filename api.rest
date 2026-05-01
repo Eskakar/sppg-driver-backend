@@ -112,8 +112,8 @@ Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
 
 {
-  "qr_code": "RUN-4",
-  "latitude": -6.2100,
+  "qr_code": "RUN-5",
+  "latitude": -6.2600,
   "longitude": 106.8100
 }
 ### ========================================
@@ -167,4 +167,15 @@ Cookie: {{login.response.headers.Set-Cookie}}
 
 {
   "ids": [5]
+}
+
+### ========================================
+### AI LLM
+### ========================================
+POST {{baseURL}}/ai/chat
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+{
+  "message": "setelah selesai mengantar mbg sma 1 jakarta setelah itu mengantar kemana?"
 }
