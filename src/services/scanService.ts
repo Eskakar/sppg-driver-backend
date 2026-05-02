@@ -1,5 +1,7 @@
-import {prisma} from "../config/db.js";
+import { prisma } from "../config/db.js";
 import { calculateDistance } from "../utils/distance.js";
+import { checkAndCompleteTugas } from "./tugasService.js";
+import { addSpin } from "./rouletteService.js";
 
 export const scanBox = async (
   qr_code: string,
@@ -20,6 +22,7 @@ export const scanBox = async (
 
   if (!box) throw new Error("Box tidak ditemukan");
 
+  const tugasId = box.tugas_detail.tugas_id;
   const ownerId = Number(box.tugas_detail.tugas_driver.driver_id);
 
   if (ownerId !== driverId) {
@@ -47,14 +50,9 @@ export const scanBox = async (
   // DELIVERED
   // =========================
   if (box.status === "diperjalanan") {
-    // ambil semua sekolah dalam tugas
     const sekolahList = await prisma.tugas_detail.findMany({
-      where: {
-        tugas_id: box.tugas_detail.tugas_id,
-      },
-      include: {
-        sekolah: true,
-      },
+      where: { tugas_id: tugasId },
+      include: { sekolah: true },
     });
 
     let selectedSekolah = null;
@@ -77,13 +75,15 @@ export const scanBox = async (
       throw new Error("Anda tidak berada di lokasi sekolah (min 20m)");
     }
 
-    // hitung MBG saat ini
+    // =========================
+    // HITUNG MBG
+    // =========================
     const deliveredBoxes = await prisma.box_mbg.findMany({
       where: {
         delivered_sekolah_id: selectedSekolah.sekolah_id,
         status: "sampai",
         tugas_detail: {
-          tugas_id: box.tugas_detail.tugas_id,
+          tugas_id: tugasId,
         },
       },
     });
@@ -93,11 +93,13 @@ export const scanBox = async (
       current += b.jumlah_porsi ?? 0;
     }
 
-    if (current >= selectedSekolah.target_mbg!) {
+    if (current >= (selectedSekolah.target_mbg ?? 0)) {
       throw new Error("Kebutuhan sekolah sudah terpenuhi");
     }
 
-    // update
+    // =========================
+    // UPDATE BOX
+    // =========================
     await prisma.box_mbg.update({
       where: { id: box.id },
       data: {
@@ -108,6 +110,36 @@ export const scanBox = async (
         delivered_sekolah_id: selectedSekolah.sekolah_id,
       },
     });
+
+    // =========================
+    // CEK SEMUA BOX DI SEKOLAH
+    // =========================
+    const boxes = await prisma.box_mbg.findMany({
+      where: {
+        tugas_detail_id: selectedSekolah.id,
+      },
+    });
+
+    const allDelivered = boxes.every((b) => b.status === "sampai");
+
+    if (allDelivered) {
+      await prisma.tugas_detail.update({
+        where: { id: selectedSekolah.id },
+        data: {
+          status: "sampai",
+          jam_sampai: new Date(),
+        },
+      });
+    }
+
+    // =========================
+    // CEK TUGAS SELESAI
+    // =========================
+    const isDone = await checkAndCompleteTugas(tugasId);
+
+    if (isDone) {
+      await addSpin(driverId); //  reward
+    }
 
     return {
       type: "delivered",

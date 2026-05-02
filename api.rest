@@ -75,7 +75,7 @@ Content-Type: {{contentType}}
 ### ========================================
 ### DETAIL TUGAS YANG SUDAH SELESAI
 ### ========================================
-GET {{baseURL}}/tugas/8/detail
+GET {{baseURL}}/tugas/12/detail
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
@@ -100,8 +100,8 @@ Cookie: {{login.response.headers.Set-Cookie}}
 
 {
   "qr_code": "RUN-1",
-  "latitude": -6.2000,
-  "longitude": 106.8000
+  "latitude": -6.2100,
+  "longitude": 106.8100
 }
 
 ### ========================================
@@ -179,3 +179,23 @@ Cookie: {{login.response.headers.Set-Cookie}}
 {
   "message": "setelah selesai mengantar mbg sma 1 jakarta setelah itu mengantar kemana?"
 }
+### ========================================
+### check berapa kesempatan buat spin
+### ========================================
+GET {{baseURL}}/roulette/spin
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### check spin gacha by id driver
+### ========================================
+POST {{baseURL}}/roulette/spin
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}
+
+### ========================================
+### check spin gacha by id driver
+### ========================================
+POST {{baseURL}}/roulette/spin/add
+Content-Type: application/json
+Cookie: {{login.response.headers.Set-Cookie}}

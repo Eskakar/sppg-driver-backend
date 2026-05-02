@@ -277,3 +277,40 @@ export const getCurrentTugas = async (driverId: number) => {
     sekolah,
   };
 };
+
+export const checkAndCompleteTugas = async (tugasId: bigint) => {
+  // ambil semua detail sekolah
+  const details = await prisma.tugas_detail.findMany({
+    where: { tugas_id: tugasId },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (details.length === 0) return false;
+
+  // cek apakah semua sudah "sampai"
+  const allDone = details.every((d) => d.status === "sampai");
+
+  if (!allDone) return false;
+
+  // cek dulu apakah sudah selesai (hindari double update)
+  const tugas = await prisma.tugas_driver.findUnique({
+    where: { id: tugasId },
+    select: { status: true },
+  });
+
+  if (tugas?.status === "selesai") return true;
+
+  // update tugas jadi selesai
+  await prisma.tugas_driver.update({
+    where: { id: tugasId },
+    data: {
+      status: "selesai",
+      jam_selesai: new Date(),
+    },
+  });
+
+  return true;
+};
