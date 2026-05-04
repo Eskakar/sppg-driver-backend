@@ -124,7 +124,7 @@ Content-Type: application/json
 Cookie: {{login.response.headers.Set-Cookie}}
 
 {
-  "tugas_id": "7",
+  "tugas_id": "1",
   "judul": "Tugas Baru Hari Ini",
   "pesan": "Silakan mulai pengantaran ke sekolah tujuan"
 }
