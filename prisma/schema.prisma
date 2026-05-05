@@ -78,6 +78,7 @@ model sekolah {
   jenis_tujuan sekolah_jenis_tujuan? @default(sekolah)
   created_at   DateTime              @default(now()) @db.Timestamp(0)
   tugas_detail tugas_detail[]
+  bukti_pengiriman bukti_pengiriman[] 
 }
 
 model sppg {
@@ -118,7 +119,7 @@ model tugas_detail {
   box_mbg      box_mbg[]
   sekolah      sekolah              @relation(fields: [sekolah_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_sekolah")
   tugas_driver tugas_driver         @relation(fields: [tugas_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_tugas_detail_tugas")
-
+  bukti_pengiriman bukti_pengiriman[] 
   @@index([sekolah_id], map: "fk_tugas_detail_sekolah")
   @@index([tugas_id], map: "idx_tugas_detail_tugas")
 }
@@ -160,6 +161,7 @@ model users {
   tugas_driver       tugas_driver[]
   roulette_histories roulette_history[]
   roulette_balance   roulette_balance?
+  bukti_pengiriman   bukti_pengiriman[] 
 
   @@index([role], map: "idx_users_role")
 }
@@ -171,6 +173,29 @@ model roulette_balance {
   updatedAt DateTime @updatedAt
 
   user users @relation(fields: [user_id], references: [id])
+}
+model bukti_pengiriman {
+  id               BigInt   @id @default(autoincrement())
+
+  tugas_id         BigInt
+  tugas_detail_id  BigInt
+  sekolah_id       BigInt
+  driver_id        BigInt
+
+  is_valid         Boolean
+  reason           String   @db.Text
+
+  latitude         Float
+  longitude        Float
+  foto_path        String   @db.Text
+  created_at       DateTime @default(now()) @db.Timestamp(0)
+
+  tugas_detail     tugas_detail @relation(fields: [tugas_detail_id], references: [id], onDelete: Cascade)
+  sekolah          sekolah      @relation(fields: [sekolah_id], references: [id], onDelete: Cascade)
+  users            users        @relation(fields: [driver_id], references: [id], onDelete: Cascade)
+
+  @@index([tugas_id])
+  @@index([driver_id])
 }
 
 model roulette_history {

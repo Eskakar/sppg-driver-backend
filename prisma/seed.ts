@@ -18,14 +18,14 @@ async function main() {
   // =========================
   // RESET (urut dari child)
   // =========================
-  await prisma.scan_logs.deleteMany();
-  await prisma.tracking_logs.deleteMany();
-  await prisma.box_mbg.deleteMany();
-  await prisma.tugas_detail.deleteMany();
-  await prisma.tugas_driver.deleteMany();
-  await prisma.sekolah.deleteMany();
-  await prisma.sppg.deleteMany();
-  await prisma.users.deleteMany();
+  // await prisma.scan_logs.deleteMany();
+  // await prisma.tracking_logs.deleteMany();
+  // await prisma.box_mbg.deleteMany();
+  // await prisma.tugas_detail.deleteMany();
+  // await prisma.tugas_driver.deleteMany();
+  // await prisma.sekolah.deleteMany();
+  // await prisma.sppg.deleteMany();
+  // await prisma.users.deleteMany();
 
   // =========================
   // USERS
