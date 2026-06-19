@@ -1,0 +1,12 @@
+workspace:
+  id: bc75d623-8977-459b-8a58-dc136e7e25a4
+localResources:
+  collections:
+    - ../postman/collections/MBG Backend API
+  environments:
+    - ../postman/environments/MBG Local.environment.yaml
+cloudResources:
+  collections:
+    ../postman/collections/MBG Backend API: 55548347-5b4c9ab5-8f8c-4dbd-b7fe-860c83eb5c45
+  environments:
+    ../postman/environments/MBG Local.environment.yaml: 55548347-ca275855-248a-4319-ba7b-59d564b2232d

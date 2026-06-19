@@ -1,0 +1,30 @@
+$kind: http-example
+description: Get current session user (from session, no auth middleware)
+request:
+  url: "{{baseUrl}}/api/auth/me"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "62"
+    etag: W/"3e-YQC+R9miSQWIfvd8uvAiQd8VeWo"
+    date: Sun, 07 Jun 2026 14:43:56 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": {
+          "id": 4,
+          "nama": "John",
+          "role": "driver"
+        }
+      }
+order: 1780843437507

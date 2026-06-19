@@ -1,0 +1,23 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/roulette/spin"
+description: Perform a roulette spin (uses one spin token). Requires auth.
+examples: .resources/Spin Roulette.resources/examples
+order: 2000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data (hasil spin)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+        });

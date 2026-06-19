@@ -1,0 +1,42 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/auth/register"
+description: "Register new user. Role must be one of: admin, driver, dapur"
+examples: .resources/Register.resources/examples
+order: 2000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nama": "John",
+      "nik": "1234567890",
+      "no_telp": "08123456789",
+      "password": "password123",
+      "role": "driver"
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 201", function () {
+            pm.response.to.have.status(201);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data (user baru)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.have.property("id");
+            pm.expect(json.data).to.have.property("nama");
+        });
+
+        pm.test("Response memiliki pesan User berhasil dibuat", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("User berhasil dibuat");
+        });

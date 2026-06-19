@@ -1,0 +1,26 @@
+$kind: http-example
+description: Mark all notifications as read for the current user. Requires auth.
+request:
+  url: "{{baseUrl}}/api/notif/read"
+  method: POST
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "52"
+    etag: W/"34-//DG4Zy+5Gxv+eNoQIlkh6muQxo"
+    date: Sun, 07 Jun 2026 14:45:34 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "message": "Notifikasi sudah dibaca"
+      }
+order: 1780843536728

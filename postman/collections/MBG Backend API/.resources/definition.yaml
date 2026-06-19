@@ -1,0 +1,6 @@
+$kind: collection
+name: MBG Backend API
+description: API collection for the MBG (Makan Bergizi Gratis) backend application. Covers authentication, user management, task management, notifications, AI features, and roulette.
+variables:
+  - key: baseUrl
+    value: 'http://localhost:3000'

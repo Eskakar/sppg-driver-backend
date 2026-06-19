@@ -1,0 +1,26 @@
+$kind: http-example
+description: Get all notifications for the current user. Requires auth.
+request:
+  url: "{{baseUrl}}/api/notif"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "26"
+    etag: W/"1a-s3B6blipWxCo2IriQlJeaz0uh7I"
+    date: Sun, 07 Jun 2026 14:45:26 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": []
+      }
+order: 1780843528420

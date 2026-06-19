@@ -1,0 +1,32 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/ai/chat"
+description: Chat with AI assistant. message max 1000 chars. Requires auth.
+examples: .resources/Chat with AI.resources/examples
+order: 1000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "message": "Halo, apa yang bisa kamu bantu?"
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data (balasan AI)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.be.a("string");
+        });

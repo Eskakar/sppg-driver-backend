@@ -1,0 +1,54 @@
+$kind: http-request
+name: Validate Delivery Proof
+method: POST
+url: "{{baseUrl}}/api/ai/validate-proof"
+description: Upload delivery proof image for AI validation. Uses multipart/form-data. Requires auth.
+examples: .resources/Validate Delivery Proof.resources/examples
+order: 2000
+body:
+  type: formdata
+  content:
+    - type: file
+      key: image
+      src:
+        - /C:/Users/ASUS/Kampus/semester 6/Teknologi dan Pemrograman Mobile/Proyek Akhir/backend/uploads/1777994215342.jpg
+      description: Proof of delivery image
+      disabled: false
+    - type: text
+      key: lat
+      value: "-6.2088"
+      description: Latitude coordinate
+      disabled: false
+    - type: text
+      key: lng
+      value: "106.8456"
+      description: Longitude coordinate
+      disabled: false
+    - type: text
+      key: tugasId
+      value: "1"
+      description: Task ID
+      disabled: false
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field valid (hasil validasi AI)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("valid");
+            pm.expect(json.valid).to.be.a("boolean");
+        });
+
+        pm.test("Response memiliki field reason (alasan dari AI)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("reason");
+        });

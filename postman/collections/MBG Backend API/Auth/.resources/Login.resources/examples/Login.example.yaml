@@ -1,0 +1,41 @@
+$kind: http-example
+description: "Login user. Returns session cookie. Fields: nama (string), password (string, min 6 chars)"
+request:
+  url: "{{baseUrl}}/api/auth/login"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "nama": "John",
+        "password": "password123"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "89"
+    etag: W/"59-z9LsW/NYPHdQl18tmxvdDyjtPB0"
+    set-cookie: connect.sid=s%3A1_12WQWGLNU6pNW35EaBvClsDgGlYfct.Immf2v3XuP53G6XozwFZKuSH43XX0vgDt%2Bd%2BiVgb36s; Path=/; Expires=Mon, 08 Jun 2026 14:43:46 GMT; HttpOnly
+    date: Sun, 07 Jun 2026 14:43:46 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "message": "Login berhasil",
+        "data": {
+          "id": 4,
+          "nama": "John",
+          "role": "driver"
+        }
+      }
+order: 1780843427886

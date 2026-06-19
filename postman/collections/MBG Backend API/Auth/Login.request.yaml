@@ -1,0 +1,40 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/auth/login"
+description: "Login user. Returns session cookie. Fields: nama (string), password (string, min 6 chars)"
+examples: .resources/Login.resources/examples
+order: 1000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nama": "John",
+      "password": "password123"
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data (user)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.have.property("id");
+            pm.expect(json.data).to.have.property("nama");
+            pm.expect(json.data).to.have.property("role");
+        });
+
+        pm.test("Response memiliki pesan Login berhasil", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("Login berhasil");
+        });

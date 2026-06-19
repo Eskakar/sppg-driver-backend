@@ -1,0 +1,33 @@
+$kind: http-example
+description: Get current authenticated user profile. Requires auth.
+request:
+  url: "{{baseUrl}}/api/user/me"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "116"
+    etag: W/"74-JtWvqFRI/MF4NJoJ7xI0aUAVg4Y"
+    date: Sun, 07 Jun 2026 14:47:04 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": {
+          "id": 4,
+          "nama": "John",
+          "no_telp": "08123456789",
+          "role": "driver",
+          "gaji": "0",
+          "foto_profil": null
+        }
+      }
+order: 1780843625407

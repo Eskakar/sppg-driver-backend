@@ -1,0 +1,24 @@
+$kind: http-request
+method: GET
+url: "{{baseUrl}}/api/notif"
+description: Get all notifications for the current user. Requires auth.
+examples: .resources/Get All Notifications.resources/examples
+order: 1000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data berupa array", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.be.an("array");
+        });

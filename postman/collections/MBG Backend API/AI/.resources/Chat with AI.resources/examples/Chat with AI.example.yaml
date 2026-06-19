@@ -1,0 +1,34 @@
+$kind: http-example
+description: Chat with AI assistant. message max 1000 chars. Requires auth.
+request:
+  url: "{{baseUrl}}/api/ai/chat"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "message": "Halo, apa yang bisa kamu bantu?"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "240"
+    etag: W/"f0-Ghcfkx+gD5hf7jo+baeNpu9aLd8"
+    date: Sun, 07 Jun 2026 14:44:13 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": "Halo! Saya bisa membantu kamu mengerti tugas pengantaran makanan, seperti mengecek order, rute, estimasi waktu tiba, dan status pengantaran. Jika ada pertanyaan spesifik tentang order atau jalur, beri tahu saya ya."
+      }
+order: 1780843455783

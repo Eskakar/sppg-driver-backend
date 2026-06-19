@@ -1,0 +1,26 @@
+$kind: http-request
+method: GET
+url: "{{baseUrl}}/api/user/me"
+description: Get current authenticated user profile. Requires auth.
+examples: .resources/Get Current User.resources/examples
+order: 1000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki data user lengkap", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.have.property("id");
+            pm.expect(json.data).to.have.property("nama");
+            pm.expect(json.data).to.have.property("role");
+        });

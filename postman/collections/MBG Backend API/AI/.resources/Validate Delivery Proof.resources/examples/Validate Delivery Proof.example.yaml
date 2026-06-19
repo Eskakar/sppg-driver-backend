@@ -1,0 +1,50 @@
+$kind: http-example
+description: Upload delivery proof image for AI validation. Uses multipart/form-data. Requires auth.
+request:
+  url: "{{baseUrl}}/api/ai/validate-proof"
+  method: POST
+  body:
+    type: formdata
+    content:
+      - type: file
+        key: image
+        src:
+          - /C:/Users/ASUS/Kampus/semester 6/Teknologi dan Pemrograman Mobile/Proyek Akhir/backend/uploads/1777994215342.jpg
+        description: Proof of delivery image
+        disabled: false
+      - type: text
+        key: lat
+        value: "-6.2088"
+        description: Latitude coordinate
+        disabled: false
+      - type: text
+        key: lng
+        value: "106.8456"
+        description: Longitude coordinate
+        disabled: false
+      - type: text
+        key: tugasId
+        value: "1"
+        description: Task ID
+        disabled: false
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "66"
+    etag: W/"42-DFNRpe3X4DXiqo1nMzDSOiJl/Ww"
+    date: Sun, 07 Jun 2026 14:45:11 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": false,
+        "reason": "Driver tidak berada di lokasi sekolah"
+      }
+order: 1780843516164

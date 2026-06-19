@@ -1,12 +1,10 @@
-@authUrl = http://localhost:3000/api/auth
-@userURL = http://localhost:3000/api/user
 @baseURL =  http://localhost:3000/api
 @contentType = application/json
 
 ### ========================================
 ### REGISTER USER (DEV)
 ### ========================================
-POST {{authUrl}}/register
+POST {{baseURL}}/auth/register
 Content-Type: {{contentType}}
 
 {
@@ -21,7 +19,7 @@ Content-Type: {{contentType}}
 ### LOGIN
 ### ========================================
 # @name login
-POST {{authUrl}}/login
+POST {{baseURL}}/auth/login
 Content-Type: {{contentType}}
 
 {
@@ -32,50 +30,50 @@ Content-Type: {{contentType}}
 ### ========================================
 ### CHECK SESSION (ME)
 ### ========================================
-GET {{authUrl}}/me
+GET {{baseURL}}/auth/me
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### LOGOUT
 ### ========================================
-POST {{authUrl}}/logout
+POST {{baseURL}}/auth/logout
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### CHECK SESSION SETELAH LOGOUT
 ### ========================================
-GET {{authUrl}}/me
+GET {{baseURL}}/auth/me
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### GET USER DATA DASHBOARD 
 ### ========================================
-GET {{userURL}}/me
+GET {{baseURL}}/user/me
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
 ### ========================================
 ### SEARCH HISTORY USER DATA  
 ### ========================================
-GET {{baseURL}}/tugas/search?search=SMA 1 JAKARTA
+GET {{baseURL}}/tugas/search?search=Menjaga kelestarian alam adalah tanggung jawab kita bersama. Bumi yang kita tempati saat ini merupakan satu-satunya rumah bagi seluruh makhluk hidup. Oleh karena itu, sudah sepatutnya kita merawat lingkungan dengan penuh kesadaran dan tindakan nyata. Mulai dari hal kecil, seperti membuang sampah pada tempatnya, menanam pohon di pekarangan rumah, hingga mengurangi penggunaan plastik sekali pakai. Jika kita peduli, alam akan memberikan kehidupan yang sejahtera dan udara yang bersih. Mari bersama-sama menjaga kelestarian bumi demi masa depan generasi penerus bangsa yang lebih sehat, hijau, dan juga nyaman untuk ditinggali.
 Content-Type: {{contentType}}
 ###
 GET {{baseURL}}/tugas/search?search=2026-04-26
 Content-Type: {{contentType}}
 ###
-GET {{baseURL}}/tugas/search?search=SMA 7 YTTA
+GET {{baseURL}}/tugas/search?search=
 Content-Type: {{contentType}}
 ###
-GET {{baseURL}}/tugas/search?search=2027-04-26
+GET {{baseURL}}/tugas/search?search=SMA 1 Jakarta
 Content-Type: {{contentType}}
 
 ### ========================================
 ### DETAIL TUGAS YANG SUDAH SELESAI
 ### ========================================
-GET {{baseURL}}/tugas/12/detail
+GET {{baseURL}}/tugas/1/detail
 Content-Type: {{contentType}}
 # Cookie: {{login.response.headers.Set-Cookie}}
 
@@ -99,7 +97,7 @@ Content-Type: {{contentType}}
 Cookie: {{login.response.headers.Set-Cookie}}
 
 {
-  "qr_code": "RUN-1",
+  "qr_code": "UPNYK-1",
   "latitude": -6.2100,
   "longitude": 106.8100
 }
@@ -177,7 +175,7 @@ Content-Type: application/json
 Cookie: {{login.response.headers.Set-Cookie}}
 
 {
-  "message": "setelah selesai mengantar mbg sma 1 jakarta setelah itu mengantar kemana?"
+  "message": "masih adakah tugas ?"
 }
 ### ========================================
 ### check berapa kesempatan buat spin

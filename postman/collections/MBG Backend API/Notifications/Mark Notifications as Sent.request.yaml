@@ -1,0 +1,31 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/notif/mark-sent"
+description: Mark notifications as sent (delivered to device). ids must be an array. Requires auth.
+examples: .resources/Mark Notifications as Sent.resources/examples
+order: 5000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "ids": [1, 2, 3]
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki pesan notifikasi ditandai terkirim", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("Notifikasi ditandai sebagai terkirim");
+        });

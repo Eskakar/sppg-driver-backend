@@ -1,0 +1,23 @@
+$kind: http-request
+method: GET
+url: "{{baseUrl}}/api/tugas/1/detail"
+description: "Get detail of a completed task by ID. Path param: id (number). Requires auth."
+examples: .resources/Get Task Detail.resources/examples
+order: 2000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+        });

@@ -6,8 +6,20 @@ export const getHistory = async (req: Request, res: Response) => {
   try {
     const { search } = req.query;
 
+    if (!search || search.toString().trim() === "") {
+      return res.json({
+        success: true,
+        data: [],
+      });
+    }
+    if (search.toString().trim().length > 100) {
+      return res.status(400).json({
+        success: false,
+        message: "kata terlalu panjang",
+      });
+    }
     const data = await getHistoryTugas(search as string);
-
+    
     return res.json({
       success: true,
       data: serializeBigInt(data),

@@ -1,0 +1,23 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/roulette/spin/add"
+description: Add spin token to current user. For development/testing only. Requires auth.
+examples: .resources/Add Spin Token (Dev).resources/examples
+order: 3000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki pesan berhasil tambah token", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.include("Berhasil tambah token spin ke");
+        });

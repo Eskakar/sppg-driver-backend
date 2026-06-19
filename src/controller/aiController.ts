@@ -21,6 +21,12 @@ export const chatController = async (req: Request, res: Response) => {
         message: "Message wajib diisi",
       });
     }
+    if (message.length > 1000) {
+      return res.status(400).json({
+        success: false,
+        message: "Message tidak boleh lebih dari 1000",
+      });
+    }
 
     const reply = await chatWithAI(user.id, message);
 

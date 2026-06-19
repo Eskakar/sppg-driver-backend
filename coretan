@@ -1,0 +1,99 @@
+flowchart TD
+
+N1((1))
+N2((2))
+N3((3))
+N4((4))
+N5((5))
+N6((6))
+N7((7))
+N8((8))
+N9((9))
+N10((10))
+N11((11))
+N12((12))
+N13((13))
+N14((14))
+N15((15))
+N16((16))
+N17((17))
+N18((18))
+N19((19))
+N20((20))
+N21((21))
+N22((22))
+N23((23))
+N24((24))
+N25((25))
+N26((26))
+N27((27))
+N28((28))
+
+N1 --> N2
+
+%% find box
+N2 --> N3
+N3 -- Tidak --> N28
+N3 -- Ya --> N4
+
+%% owner
+N4 --> N5
+N5 -- Tidak --> N28
+N5 -- Ya --> N6
+
+%% pickup
+N6 --> N7
+N7 -- Ya --> N8
+N8 --> N28
+
+%% delivered
+N7 -- Tidak --> N9
+N9 --> N10
+
+N10 -- Tidak --> N28
+N10 -- Ya --> N11
+
+%% loop sekolah
+N11 -- Ada sekolah --> N12
+N11 -- Tidak ada --> N14
+
+N12 --> N13
+
+N13 -- Distance <=20 --> N15
+N13 -- Distance >20 --> N11
+
+%% selected sekolah
+N15 --> N16
+
+N16 -- Tidak ada --> N28
+N16 -- Ada --> N17
+
+%% loop delivered box
+N17 --> N18
+
+N18 --> N19
+
+N19 -- Masih ada box --> N18
+N19 -- Selesai --> N20
+
+%% target
+N20 --> N21
+
+N21 -- Terpenuhi --> N28
+N21 -- Belum --> N22
+
+%% update
+N22 --> N23
+
+%% all delivered
+N23 --> N24
+
+N24 -- Ya --> N25
+N24 -- Tidak --> N26
+
+N25 --> N26
+
+%% check complete
+N26 --> N27
+
+N27 --> N28

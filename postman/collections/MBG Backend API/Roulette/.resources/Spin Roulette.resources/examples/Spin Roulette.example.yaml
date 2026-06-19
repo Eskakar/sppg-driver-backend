@@ -1,0 +1,26 @@
+$kind: http-example
+description: Perform a roulette spin (uses one spin token). Requires auth.
+request:
+  url: "{{baseUrl}}/api/roulette/spin"
+  method: POST
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "49"
+    etag: W/"31-eGvTRe+gRUemDGwgOHubJcNGwL0"
+    date: Sun, 07 Jun 2026 14:46:06 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": false,
+        "message": "Spin tidak tersedia"
+      }
+order: 1780843570164

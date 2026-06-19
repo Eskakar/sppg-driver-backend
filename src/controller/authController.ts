@@ -4,11 +4,17 @@ import { loginUser, registerUser } from "../services/authService.js";
 export const login = async (req: Request, res: Response) => {
   try {
     const { nama , password } = req.body;
-
+    
     if (!nama || !password) {
       return res.status(400).json({
         success: false,
         message: "nama dan password wajib diisi",
+      });
+    }
+    if(password.length < 6){
+      return res.status(400).json({
+        success: false,
+        message: "password minimal 6 kata",
       });
     }
 

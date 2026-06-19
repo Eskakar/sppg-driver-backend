@@ -1,0 +1,34 @@
+$kind: http-example
+description: Mark notifications as sent (delivered to device). ids must be an array. Requires auth.
+request:
+  url: "{{baseUrl}}/api/notif/mark-sent"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "ids": [1, 2, 3]
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "65"
+    etag: W/"41-zxDQIQ1HRZflsux/PAzaeLhghq8"
+    date: Sun, 07 Jun 2026 14:45:54 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "message": "Notifikasi ditandai sebagai terkirim"
+      }
+order: 1780843555941

@@ -1,0 +1,27 @@
+$kind: http-example
+description: Get the currently active/ongoing task for the logged-in user. Requires auth.
+request:
+  url: "{{baseUrl}}/api/tugas/current"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "65"
+    etag: W/"41-taR32qlj67RTXgelsbet1SeE2eQ"
+    date: Sun, 07 Jun 2026 14:46:47 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": null,
+        "message": "Tidak ada tugas hari ini"
+      }
+order: 1780843608675

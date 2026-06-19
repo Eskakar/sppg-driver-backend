@@ -1,0 +1,36 @@
+$kind: http-example
+description: Send task notification to drivers (admin only). Requires auth.
+request:
+  url: "{{baseUrl}}/api/notif/send-tugas"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "tugas_id": 1,
+        "judul": "Tugas Baru",
+        "pesan": "Ada tugas pengiriman baru untuk Anda"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "62"
+    etag: W/"3e-jgFDP6jLZ4LhV/EkGJ2SOkli48o"
+    date: Sun, 07 Jun 2026 14:45:40 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "message": "Notifikasi tugas berhasil dikirim"
+      }
+order: 1780843542833

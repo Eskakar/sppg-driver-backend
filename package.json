@@ -19,7 +19,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "postinstall": "prisma generate",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -41,9 +42,13 @@
     "@types/express": "^5.0.6",
     "@types/express-mysql-session": "^3.0.8",
     "@types/express-session": "^1.19.0",
+    "@types/jest": "^30.0.0",
+    "@types/mocha": "^10.0.10",
     "@types/multer": "^2.1.0",
     "@types/node": "^25.6.0",
-    "prisma": "^7.8.0",
+    "jest": "^30.4.2",
+    "prisma": "^6.19.3",
+    "ts-jest": "^29.4.11",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   }

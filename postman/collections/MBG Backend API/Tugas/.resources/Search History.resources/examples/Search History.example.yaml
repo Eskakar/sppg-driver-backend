@@ -1,0 +1,28 @@
+$kind: http-example
+description: "Search task history by keyword. Query param: search (string, max 100 chars). Requires auth."
+request:
+  url: "{{baseUrl}}/api/tugas/search?search=keyword"
+  method: GET
+  queryParams:
+    search: keyword
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "26"
+    etag: W/"1a-s3B6blipWxCo2IriQlJeaz0uh7I"
+    date: Sun, 07 Jun 2026 14:46:26 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": []
+      }
+order: 1780843588349

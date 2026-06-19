@@ -1,0 +1,25 @@
+$kind: http-request
+method: GET
+url: "{{baseUrl}}/api/auth/me"
+description: Get current session user (from session, no auth middleware)
+examples: .resources/Get Session User.resources/examples
+order: 4000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200 (sudah login)", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki data user dari session", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+            pm.expect(json.data).to.have.property("id");
+            pm.expect(json.data).to.have.property("nama");
+        });

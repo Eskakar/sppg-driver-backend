@@ -1,0 +1,28 @@
+$kind: http-example
+description: Get current spin token count for the user. Requires auth.
+request:
+  url: "{{baseUrl}}/api/roulette/spin"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "35"
+    etag: W/"23-vhyKHQjbjfNMRNYfl1L10vpBknY"
+    date: Sun, 07 Jun 2026 14:46:00 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": {
+          "spins": 0
+        }
+      }
+order: 1780843562054

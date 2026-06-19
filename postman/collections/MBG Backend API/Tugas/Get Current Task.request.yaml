@@ -1,0 +1,30 @@
+$kind: http-request
+method: GET
+url: "{{baseUrl}}/api/tugas/current"
+description: Get the currently active/ongoing task for the logged-in user. Requires auth.
+examples: .resources/Get Current Task.resources/examples
+order: 4000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data (bisa null jika tidak ada tugas)", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+        });
+
+        pm.test("Jika tidak ada tugas, ada pesan keterangan", function () {
+            const json = pm.response.json();
+            if (json.data === null) {
+                pm.expect(json.message).to.eql("Tidak ada tugas hari ini");
+            }
+        });

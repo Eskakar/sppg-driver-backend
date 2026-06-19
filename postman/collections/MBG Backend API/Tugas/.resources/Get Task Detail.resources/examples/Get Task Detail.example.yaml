@@ -1,0 +1,52 @@
+$kind: http-example
+description: "Get detail of a completed task by ID. Path param: id (number). Requires auth."
+request:
+  url: "{{baseUrl}}/api/tugas/1/detail"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "367"
+    etag: W/"16f-firt3VC48okeXsQ9uJghD0FX9Os"
+    date: Sun, 07 Jun 2026 14:46:35 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "data": {
+          "id": 1,
+          "tanggal": "2026-05-05T00:00:00.000Z",
+          "status": "berjalan",
+          "durasi_menit": 0,
+          "total_mbg": 90,
+          "mbg_sampai": 10,
+          "mbg_perjalanan": 80,
+          "mbg_sppg": 0,
+          "sekolah": [
+            {
+              "nama": "SMA 1 Jakarta",
+              "status": "pending",
+              "jam_sampai": null
+            },
+            {
+              "nama": "SMA 2 Jakarta",
+              "status": "pending",
+              "jam_sampai": null
+            },
+            {
+              "nama": "SD 3 Jakarta",
+              "status": "pending",
+              "jam_sampai": null
+            }
+          ]
+        }
+      }
+order: 1780843596204

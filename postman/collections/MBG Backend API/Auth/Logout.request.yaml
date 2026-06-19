@@ -1,0 +1,23 @@
+$kind: http-request
+name: Logout
+method: POST
+url: '{{baseUrl}}/api/auth/logout'
+description: Logout and destroy session
+order: 3000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki pesan Logout berhasil", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("Logout berhasil");
+        });

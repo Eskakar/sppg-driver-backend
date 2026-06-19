@@ -1,0 +1,26 @@
+$kind: http-example
+description: Add spin token to current user. For development/testing only. Requires auth.
+request:
+  url: "{{baseUrl}}/api/roulette/spin/add"
+  method: POST
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "65"
+    etag: W/"41-Fs7XP5PjvI6+5seoJIcQ83rdn10"
+    date: Sun, 07 Jun 2026 14:46:15 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": true,
+        "message": "Berhasil tambah token spin ke : John"
+      }
+order: 1780843576366

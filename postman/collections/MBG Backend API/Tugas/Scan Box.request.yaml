@@ -1,0 +1,33 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/tugas/scan"
+description: Scan a box QR code before pickup/delivery. Requires auth.
+examples: .resources/Scan Box.resources/examples
+order: 5000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "qr_code": "BOX-001",
+      "latitude": -6.2088,
+      "longitude": 106.8456
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki field data hasil scan", function () {
+            const json = pm.response.json();
+            pm.expect(json).to.have.property("data");
+        });

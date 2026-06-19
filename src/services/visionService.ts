@@ -30,7 +30,7 @@ const calculateDistance = (
 const analyzeImage = async (base64Image: string) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "google/gemma-3-27b-it:free", // pastikan model support image
+      model: "google/gemma-3-27b-it:free",
       messages: [
         {
           role: "user",

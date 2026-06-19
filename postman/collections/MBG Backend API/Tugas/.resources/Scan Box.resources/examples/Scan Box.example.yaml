@@ -1,0 +1,36 @@
+$kind: http-example
+description: Scan a box QR code before pickup/delivery. Requires auth.
+request:
+  url: "{{baseUrl}}/api/tugas/scan"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "qr_code": "BOX-001",
+        "latitude": -6.2088,
+        "longitude": 106.8456
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    x-powered-by: Express
+    vary: Origin
+    access-control-allow-credentials: "true"
+    content-type: application/json; charset=utf-8
+    content-length: "49"
+    etag: W/"31-k3GohO+C+5OjwVY/7qNdh+sH6K4"
+    date: Sun, 07 Jun 2026 14:46:54 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "success": false,
+        "message": "Box tidak ditemukan"
+      }
+order: 1780843615216

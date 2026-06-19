@@ -1,0 +1,23 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/notif/read"
+description: Mark all notifications as read for the current user. Requires auth.
+examples: .resources/Mark Notifications as Read.resources/examples
+order: 2000
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki pesan notifikasi sudah dibaca", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("Notifikasi sudah dibaca");
+        });

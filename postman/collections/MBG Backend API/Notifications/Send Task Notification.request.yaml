@@ -1,0 +1,33 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/notif/send-tugas"
+description: Send task notification to drivers (admin only). Requires auth.
+examples: .resources/Send Task Notification.resources/examples
+order: 3000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "tugas_id": 1,
+      "judul": "Tugas Baru",
+      "pesan": "Ada tugas pengiriman baru untuk Anda"
+    }
+events:
+  - listen: post-response
+    script:
+      content: |-
+        pm.test("Status code adalah 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Response memiliki field success = true", function () {
+            const json = pm.response.json();
+            pm.expect(json.success).to.eql(true);
+        });
+
+        pm.test("Response memiliki pesan notifikasi berhasil dikirim", function () {
+            const json = pm.response.json();
+            pm.expect(json.message).to.eql("Notifikasi tugas berhasil dikirim");
+        });
